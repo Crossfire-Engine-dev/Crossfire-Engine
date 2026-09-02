@@ -60,6 +60,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
+section,[id]{scroll-margin-top:82px}
 body{
   background:var(--bg);
   color:var(--text);
@@ -101,22 +102,71 @@ section{position:relative;padding:96px 0}
 .bg-vignette{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 40%,transparent 48%,rgba(3,4,8,.95) 100%)}
 #embers{position:fixed;inset:0;z-index:-2;pointer-events:none}
 
-/* ============ PRELOADER ============ */
+/* ============ PRELOADER (boot sequence) ============ */
 #preloader{
-  position:fixed;inset:0;z-index:10000;background:#05060a;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
-  transition:opacity .7s ease,visibility .7s;
+  position:fixed;inset:0;z-index:10000;background:#04050a;overflow:hidden;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .75s ease,visibility .75s;
 }
 #preloader.done{opacity:0;visibility:hidden}
-.pre-mark{position:relative;width:92px;height:92px;display:grid;place-items:center}
-.pre-mark svg{filter:drop-shadow(0 0 18px rgba(232,16,32,.55))}
-.pre-ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--red);border-right-color:rgba(232,16,32,.35);animation:spin 1.1s linear infinite}
-.pre-ring.two{inset:10px;border-top-color:var(--blue);border-right-color:rgba(91,156,243,.3);animation-duration:1.6s;animation-direction:reverse}
+#preloader::before{ /* terminal grid backdrop */
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(91,156,243,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(91,156,243,.05) 1px,transparent 1px);
+  background-size:46px 46px;
+  mask-image:radial-gradient(640px 420px at 50% 44%,#000 18%,transparent 76%);
+  -webkit-mask-image:radial-gradient(640px 420px at 50% 44%,#000 18%,transparent 76%);
+}
+#preloader::after{ /* ambient glow */
+  content:"";position:absolute;left:50%;top:44%;width:640px;height:640px;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(232,16,32,.11),rgba(91,156,243,.07) 46%,transparent 70%);
+  animation:preglow 3.4s ease-in-out infinite alternate;pointer-events:none;
+}
+@keyframes preglow{from{opacity:.55;transform:translate(-50%,-50%) scale(.93)}to{opacity:1;transform:translate(-50%,-50%) scale(1.06)}}
+.pre-wrap{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;max-width:420px;width:100%;padding:0 24px;transition:transform .65s var(--ease-out)}
+#preloader.done .pre-wrap{transform:scale(1.05)}
+.pre-mark{position:relative;width:134px;height:134px;margin-bottom:26px}
+.rng{position:absolute;inset:0;width:100%;height:100%}
+.rng circle{fill:none;stroke-width:3;stroke-linecap:round}
+.r1{animation:spin 7s linear infinite}
+.r1 circle{stroke:rgba(255,255,255,.16);stroke-dasharray:70 282}
+.r2{animation:spin 2.3s linear infinite reverse}
+.r2 circle{stroke:#5b9cf3;stroke-dasharray:97 192;filter:drop-shadow(0 0 6px rgba(91,156,243,.75))}
+.r3{animation:spin 1.35s linear infinite}
+.r3 circle{stroke:#e81020;stroke-dasharray:60 166;filter:drop-shadow(0 0 6px rgba(232,16,32,.75))}
 @keyframes spin{to{transform:rotate(360deg)}}
-.pre-title{font-weight:900;letter-spacing:6px;font-size:.82rem;text-transform:uppercase;color:#cfd4e0}
-.pre-bar{width:220px;height:4px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
-.pre-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--crimson));transition:width .25s ease;box-shadow:0 0 12px rgba(255,59,107,.6)}
-.pre-pct{font-size:.72rem;color:var(--muted);letter-spacing:2px;font-variant-numeric:tabular-nums}
+.pre-core{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;animation:corePulse 1.7s ease-in-out infinite}
+@keyframes corePulse{0%,100%{transform:scale(1);filter:drop-shadow(0 0 6px rgba(232,16,32,.7))}50%{transform:scale(1.14);filter:drop-shadow(0 0 18px rgba(232,16,32,.95))}}
+.pre-brand{
+  font-size:2.05rem;font-weight:900;letter-spacing:4px;margin-bottom:7px;
+  background:linear-gradient(110deg,#b9c1d3 30%,#ffffff 50%,#b9c1d3 70%);background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmerT 2.6s linear infinite;
+}
+.pre-brand em{font-style:normal;background:linear-gradient(90deg,#ff3b6b,#f8c838);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+@keyframes shimmerT{from{background-position:200% 0}to{background-position:-20% 0}}
+.pre-tag{font-size:.68rem;letter-spacing:3.6px;text-transform:uppercase;color:var(--muted-2);margin-bottom:30px}
+.pre-log{
+  width:100%;max-width:340px;min-height:116px;margin-bottom:22px;
+  font-family:Consolas,"Courier New",monospace;font-size:.82rem;
+  display:flex;flex-direction:column;gap:8px;
+}
+.bl{display:flex;justify-content:space-between;gap:12px;opacity:0;transform:translateX(-9px);transition:opacity .4s,transform .4s var(--ease-out)}
+.bl.show{opacity:1;transform:none}
+.bl-t{color:#9aa4b8}
+.bl-ok{color:var(--green);font-weight:700;opacity:0;transform:scale(.5);display:inline-block;transition:opacity .35s,transform .4s var(--ease-spring)}
+.bl.ok .bl-ok{opacity:1;transform:scale(1)}
+.pre-bar{width:100%;max-width:340px;height:6px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.pre-bar i{
+  display:block;height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,#5b9cf3,#ff3b6b,#f8c838);background-size:220% 100%;
+  animation:barglow 1.5s linear infinite;box-shadow:0 0 14px rgba(255,59,107,.65);
+}
+@keyframes barglow{from{background-position:0 0}to{background-position:-220% 0}}
+.pre-foot{width:100%;max-width:340px;margin-top:13px;display:flex;justify-content:space-between;align-items:center}
+.pre-pct{font-size:.76rem;color:var(--muted);letter-spacing:2px;font-variant-numeric:tabular-nums;font-weight:700}
+.pre-skip{font-size:.68rem;color:var(--muted-2);letter-spacing:1.4px;text-transform:uppercase}
 
 /* ============ SCROLL PROGRESS & CURSOR ============ */
 #progressBar{position:fixed;top:0;left:0;height:3px;width:0;z-index:9990;background:linear-gradient(90deg,var(--blue),var(--crimson),var(--gold));box-shadow:0 0 14px rgba(255,59,107,.6);transition:width .08s linear}
@@ -788,18 +838,25 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
 
 <!-- ============ PRELOADER ============ -->
 <div id="preloader">
-  <div class="pre-mark">
-    <div class="pre-ring"></div>
-    <div class="pre-ring two"></div>
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="9" stroke="#e81020" stroke-width="2"/>
-      <path d="M12 1v6M12 17v6M1 12h6M17 12h6" stroke="#e81020" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="12" cy="12" r="2" fill="#e81020"/>
-    </svg>
+  <div class="pre-wrap">
+    <div class="pre-mark">
+      <svg class="rng r1" viewBox="0 0 120 120"><circle cx="60" cy="60" r="56"/></svg>
+      <svg class="rng r2" viewBox="0 0 120 120"><circle cx="60" cy="60" r="46"/></svg>
+      <svg class="rng r3" viewBox="0 0 120 120"><circle cx="60" cy="60" r="36"/></svg>
+      <div class="pre-core">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="#e81020" stroke-width="2"/>
+          <path d="M12 1v6M12 17v6M1 12h6M17 12h6" stroke="#e81020" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="12" cy="12" r="2.4" fill="#e81020"/>
+        </svg>
+      </div>
+    </div>
+    <div class="pre-brand">CROSSFIRE <em>ENGINE</em></div>
+    <div class="pre-tag">Premium Gaming Modules</div>
+    <div class="pre-log" id="preLog"></div>
+    <div class="pre-bar"><i id="preBar"></i></div>
+    <div class="pre-foot"><span class="pre-pct" id="prePct">0%</span><span class="pre-skip">click to skip</span></div>
   </div>
-  <div class="pre-title">Crossfire Engine</div>
-  <div class="pre-bar"><i id="preBar"></i></div>
-  <div class="pre-pct" id="prePct">0%</div>
 </div>
 
 <!-- ============ BACKGROUND ============ -->
@@ -830,6 +887,7 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       <li><a href="#payments" data-spy="payments">Payments</a></li>
       <li><a href="#features" data-spy="features">Features</a></li>
       <li><a href="#faq" data-spy="faq">FAQ</a></li>
+      <li><a href="#winsettings" data-spy="winsettings">Settings</a></li>
       <li><a href="#support" data-spy="support">Support</a></li>
       <li><a href="#" id="downloadLink">Download</a></li>
       <li class="has-dropdown" id="contactDD">
@@ -873,6 +931,7 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
   <a href="#payments">Payments <span>→</span></a>
   <a href="#features">Features <span>→</span></a>
   <a href="#faq">FAQ <span>→</span></a>
+  <a href="#winsettings">Settings <span>→</span></a>
   <a href="#support">Support <span>→</span></a>
   <a href="#" id="mmDownload">Download <span>→</span></a>
   <div class="mm-cta">
@@ -1603,6 +1662,7 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
           <li><a href="#payments">→ Modes of Payment</a></li>
           <li><a href="#features">→ Why Us</a></li>
           <li><a href="#faq">→ FAQ</a></li>
+          <li><a href="#winsettings">→ Device &amp; Settings</a></li>
           <li><a href="#support">→ Support Team</a></li>
         </ul>
       </div>
@@ -1634,23 +1694,53 @@ const $$ = (s, c) => Array.from((c||document).querySelectorAll(s));
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = window.matchMedia('(pointer: fine)').matches;
 
-/* ---------- Preloader ---------- */
-const pre = $('#preloader'), preBar = $('#preBar'), prePct = $('#prePct');
-let prog = 0;
-const preTimer = setInterval(() => {
-  prog = Math.min(prog + Math.random() * 16 + 6, 96);
-  preBar.style.width = prog + '%';
-  prePct.textContent = Math.round(prog) + '%';
-  if (prog >= 96 && document.readyState === 'complete') finishPre();
-}, 160);
-function finishPre(){
-  clearInterval(preTimer);
-  preBar.style.width = '100%'; prePct.textContent = '100%';
-  setTimeout(() => { pre.classList.add('done'); document.body.style.overflow = ''; }, 450);
-}
+/* ---------- Preloader (boot sequence) ---------- */
+const pre = $('#preloader'), preBar = $('#preBar'), prePct = $('#prePct'), preLog = $('#preLog');
+const bootLines = [
+  'Initializing core engine',
+  'Loading 12 modules',
+  'Enabling anti-detection',
+  'Applying interface'
+];
+let logIdx = 0, loadDone = false, preStarted = performance.now(), preFinished = false;
 document.body.style.overflow = 'hidden';
-window.addEventListener('load', () => setTimeout(finishPre, 500));
-setTimeout(finishPre, 4200); // safety
+
+function addBootLine(){
+  if (logIdx >= bootLines.length) return;
+  const li = document.createElement('div');
+  li.className = 'bl';
+  li.innerHTML = '<span class="bl-t">&gt; ' + bootLines[logIdx] + '…</span><span class="bl-ok">OK</span>';
+  preLog.appendChild(li);
+  requestAnimationFrame(() => li.classList.add('show'));
+  setTimeout(() => li.classList.add('ok'), 380);
+  logIdx++;
+  if (logIdx < bootLines.length) setTimeout(addBootLine, 470);
+}
+addBootLine();
+
+let prog = 0;
+(function tickProg(){
+  const target = loadDone ? 100 : 92;
+  prog += (target - prog) * (loadDone ? .11 : .05);
+  preBar.style.width = prog.toFixed(1) + '%';
+  prePct.textContent = Math.round(prog) + '%';
+  if (!(loadDone && prog > 99.4)) requestAnimationFrame(tickProg);
+  else { preBar.style.width = '100%'; prePct.textContent = '100%'; }
+})();
+
+window.addEventListener('load', () => { loadDone = true; queueFinish(); });
+setTimeout(() => { if (!loadDone){ loadDone = true; queueFinish(); } }, 6000); // safety
+
+function queueFinish(){
+  const elapsed = performance.now() - preStarted;
+  setTimeout(finishPre, Math.max(0, 2400 - elapsed)); // let the boot log breathe
+}
+function finishPre(){
+  if (preFinished) return; preFinished = true;
+  loadDone = true;
+  setTimeout(() => { pre.classList.add('done'); document.body.style.overflow = ''; }, 320);
+}
+pre.addEventListener('click', finishPre);
 
 /* ---------- Scroll progress ---------- */
 const progressBar = $('#progressBar');
@@ -1756,7 +1846,7 @@ const spyIO = new IntersectionObserver(ents => {
     }
   });
 }, {rootMargin:'-42% 0px -52% 0px'});
-['products','payments','features','faq','support'].forEach(id => { const el = document.getElementById(id); if (el) spyIO.observe(el); });
+['products','payments','features','faq','winsettings','support'].forEach(id => { const el = document.getElementById(id); if (el) spyIO.observe(el); });
 
 /* ---------- Mobile menu ---------- */
 const burger = $('#burger'), mMenu = $('#mobileMenu'), scrim = $('#scrim');
@@ -1935,5 +2025,5 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape'){ closeDL(); 
 $('#toTop').addEventListener('click', () => window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'}));
 })();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a33bddae49175f47',t:'MTc4ODE3NzUzMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
