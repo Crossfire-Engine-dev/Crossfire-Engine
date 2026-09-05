@@ -698,62 +698,6 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
   color:var(--gold);font-size:.84rem;font-weight:600;
 }
 
-/* ============ DOWNLOAD MODAL ============ */
-.modal-overlay{
-  position:fixed;inset:0;z-index:9000;background:rgba(4,5,9,.8);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  display:flex;align-items:center;justify-content:center;padding:24px;
-  opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;
-}
-.modal-overlay.open{opacity:1;visibility:visible}
-.modal{
-  width:100%;max-width:680px;max-height:86vh;overflow-y:auto;
-  background:rgba(14,16,22,.97);border:1px solid var(--border);border-radius:24px;padding:30px 28px;
-  transform:translateY(22px) scale(.965);transition:transform .4s var(--ease-out);
-  box-shadow:var(--shadow-lg);
-}
-.modal-overlay.open .modal{transform:none}
-.modal::-webkit-scrollbar{width:8px}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.modal h2{font-size:1.55rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:12px}
-.modal-sub{color:var(--muted);font-size:.9rem;margin-bottom:22px}
-.modal-close{
-  background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);cursor:pointer;
-  width:38px;height:38px;border-radius:12px;font-size:1.05rem;line-height:1;flex:none;
-  display:flex;align-items:center;justify-content:center;transition:color .25s,border-color .25s,transform .3s;
-}
-.modal-close:hover{color:#fff;border-color:var(--red);transform:rotate(90deg)}
-.dl-list{display:flex;flex-direction:column;gap:12px}
-.dl-item{
-  display:flex;align-items:center;gap:15px;background:rgba(255,255,255,.03);
-  border:1px solid var(--border);border-radius:16px;padding:15px 17px;
-  transition:transform .3s,border-color .3s,background .3s;
-}
-.dl-item:hover{transform:translateX(5px);border-color:rgba(91,156,243,.5);background:rgba(91,156,243,.05)}
-.dl-num{
-  flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
-  background:rgba(91,156,243,.1);border:1px solid rgba(91,156,243,.35);
-  color:var(--blue-2);font-weight:900;font-size:.95rem;
-}
-.dl-info{flex:1;min-width:0}
-.dl-info h3{color:#fff;font-size:.97rem;font-weight:800}
-.dl-info p{color:var(--muted);font-size:.79rem;margin:0}
-.btn-dl{
-  display:inline-flex;align-items:center;gap:7px;flex:none;padding:9px 17px;border-radius:10px;
-  font-weight:700;font-size:.84rem;text-decoration:none;cursor:pointer;font-family:inherit;
-  background:linear-gradient(135deg,#0fae42,#14d455);color:#04140a;border:1px solid transparent;
-  transition:transform .25s,box-shadow .25s,background .25s;
-}
-.btn-dl:hover{transform:translateY(-2px);box-shadow:0 10px 22px -6px rgba(18,212,83,.55)}
-.btn-dl.disabled{background:rgba(255,255,255,.05);color:var(--muted-2);cursor:not-allowed;border-color:var(--border)}
-.btn-dl.disabled:hover{transform:none;box-shadow:none}
-.dl-warning{
-  display:flex;align-items:flex-start;gap:11px;margin-top:22px;padding:14px 16px;border-radius:14px;
-  background:rgba(248,200,56,.06);border:1px solid rgba(248,200,56,.3);
-  color:var(--gold);font-size:.85rem;line-height:1.55;
-}
-.dl-warning strong{color:#ffd75e}
-
 /* ============ TOASTS ============ */
 .toast-zone{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:10001;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none;width:max-content;max-width:92vw}
 .toast{
@@ -889,7 +833,6 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       <li><a href="#faq" data-spy="faq">FAQ</a></li>
       <li><a href="#winsettings" data-spy="winsettings">Settings</a></li>
       <li><a href="#support" data-spy="support">Support</a></li>
-      <li><a href="#" id="downloadLink">Download</a></li>
       <li class="has-dropdown" id="contactDD">
         <a href="#support">Contact <span class="caret">▼</span></a>
         <div class="dropdown">
@@ -933,7 +876,6 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
   <a href="#faq">FAQ <span>→</span></a>
   <a href="#winsettings">Settings <span>→</span></a>
   <a href="#support">Support <span>→</span></a>
-  <a href="#" id="mmDownload">Download <span>→</span></a>
   <div class="mm-cta">
     <a class="btn btn-blue" href="#products">Get Started</a>
     <a class="btn btn-discord" href="https://discord.gg/UNyQY6TbDt" target="_blank" rel="noopener">Join Discord</a>
@@ -1052,13 +994,15 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
     <div class="grid" id="productGrid">
 
       <!-- 1 -->
-      <article class="card reveal" data-cat="bundle" data-avail="1" data-search="auto gg all-in-one bundle full access farm damage summon all maps">
+      <article class="card reveal" data-cat="bundle" data-avail="1" data-search="auto gg all-in-one bundle full access farm damage summon summon cards auto hit boss all maps">
         <div class="card-top"><span class="card-cat">Bundle Deal</span><span class="badge badge-popular">Popular</span></div>
         <h3>Auto GG v1.1 &amp; All-in-One</h3>
         <p class="desc">Full Access — the complete bundle with every module unlocked.</p>
         <ul class="feats">
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Full Access — All Modules</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Farm Damage &amp; Summon</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Free Auto Summon Cards</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Free Auto Hit Boss</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>All Maps Included</li>
           <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
@@ -1322,7 +1266,7 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       </div>
       <div class="step reveal" data-d="3">
         <div class="step-num">3</div>
-        <div><h4>Get your license</h4><p>Receive your hardware-bound license and download the module instantly.</p></div>
+        <div><h4>Get your license</h4><p>Receive your hardware-bound license and get started instantly.</p></div>
       </div>
     </div>
   </div>
@@ -1569,61 +1513,6 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
 </section>
 </main>
 
-<!-- ============ DOWNLOAD MODAL ============ -->
-<div class="modal-overlay" id="dlModal" role="dialog" aria-modal="true" aria-labelledby="dlTitle">
-  <div class="modal">
-    <div class="modal-head">
-      <h2 id="dlTitle">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M12 15l-4.5-4.5M12 15l4.5-4.5" stroke="#12d453" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" stroke="#12d453" stroke-width="2.2" stroke-linecap="round"/></svg>
-        Downloads
-      </h2>
-      <button class="modal-close" id="dlClose" aria-label="Close">&#10005;</button>
-    </div>
-    <p class="modal-sub">Get the latest Crossfire Engine tools — click <strong style="color:#fff">Download</strong> on any tool.</p>
-    <div class="dl-list">
-      <div class="dl-item">
-        <div class="dl-num">1</div>
-        <div class="dl-info"><h3>Auto Farm v1.1</h3><p>Automated farming module for faster progression. <span style="color:var(--gold)">Contact admin to unlock.</span></p></div>
-        <span class="btn-dl disabled">Unavailable</span>
-      </div>
-      <div class="dl-item">
-        <div class="dl-num">2</div>
-        <div class="dl-info"><h3>Auto GG v1.1</h3><p>Farm damage / summon automation with anti-detection. <span style="color:var(--gold)">Contact admin to unlock.</span></p></div>
-        <span class="btn-dl disabled">Unavailable</span>
-      </div>
-      <div class="dl-item">
-        <div class="dl-num">3</div>
-        <div class="dl-info"><h3>Physic Easy Tools OFCA</h3><p>Easy-to-use physics toolkit for smooth gameplay.</p></div>
-        <a class="btn-dl" href="https://www.mediafire.com/file/rpmxqgu80wiwlzk/Physic+Easy+Tools+OFCA.exe/file" target="_blank" rel="noopener">Download</a>
-      </div>
-      <div class="dl-item">
-        <div class="dl-num">4</div>
-        <div class="dl-info"><h3>Auto Hit + Reload</h3><p>Auto-hit and auto-reload for consistent performance.</p></div>
-        <a class="btn-dl" href="https://www.mediafire.com/file/pnxa3iygp2n9r4x/Auto+Hit+++Reload.exe/file" target="_blank" rel="noopener">Download</a>
-      </div>
-      <div class="dl-item">
-        <div class="dl-num">5</div>
-        <div class="dl-info"><h3>ZM AFK</h3><p>Zombie Mode AFK farming — stay active while away.</p></div>
-        <a class="btn-dl" href="https://www.mediafire.com/file/726485o0sqkk49j/zm+afk.zip/file" target="_blank" rel="noopener">Download</a>
-      </div>
-      <div class="dl-item">
-        <div class="dl-num">6</div>
-        <div class="dl-info"><h3>Instant Close CF</h3><p>Instant close utility for CrossFire.</p></div>
-        <a class="btn-dl" href="https://www.mediafire.com/file/ws9uznl6peuwpmn/CloseCF.bat/file" target="_blank" rel="noopener">Download</a>
-      </div>
-      <div class="dl-item">
-        <div class="dl-num">7</div>
-        <div class="dl-info"><h3>Anti Kick</h3><p>Anti-kick protection to keep you in the game.</p></div>
-        <a class="btn-dl" href="https://www.mediafire.com/file/v9typbasd9scimj/AntiKick.exe/file" target="_blank" rel="noopener">Download</a>
-      </div>
-    </div>
-    <div class="dl-warning">
-      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M12 3L1.8 20h20.4L12 3z" stroke="#f8c838" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 10v4.5" stroke="#f8c838" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.1" fill="#f8c838"/></svg>
-      <span><strong>Warning:</strong> Please <strong>ask or consult our admin</strong> before downloading or running any file.</span>
-    </div>
-  </div>
-</div>
-
 <!-- ============ TOASTS ============ -->
 <div class="toast-zone">
   <div class="toast" id="videoToast" role="status">
@@ -1672,7 +1561,6 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
           <li><a href="https://discord.gg/UNyQY6TbDt" target="_blank" rel="noopener">→ Discord Server</a></li>
           <li><a href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">→ Purchase / Contact</a></li>
           <li><a href="https://cfph.onstove.com/" target="_blank" rel="noopener">→ CrossFire Official</a></li>
-          <li><a href="#" id="footDownload">→ Downloads</a></li>
         </ul>
       </div>
     </div>
@@ -2012,18 +1900,9 @@ if (chBox) chBox.addEventListener('click', () => {
   }
 });
 
-/* ---------- Download modal ---------- */
-const dlModal = $('#dlModal');
-function openDL(e){ if (e) e.preventDefault(); dlModal.classList.add('open'); setMenu(false); }
-function closeDL(){ dlModal.classList.remove('open'); }
-['downloadLink','mmDownload','footDownload'].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener('click', openDL); });
-$('#dlClose').addEventListener('click', closeDL);
-dlModal.addEventListener('click', e => { if (e.target === dlModal) closeDL(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape'){ closeDL(); setMenu(false); } });
-
 /* ---------- Back to top ---------- */
 $('#toTop').addEventListener('click', () => window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'}));
 })();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a365fcfbf8ba8369',t:'MTc4ODYxOTIxNw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
