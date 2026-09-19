@@ -168,14 +168,6 @@ section{position:relative;padding:96px 0}
 
 /* ============ SCROLL PROGRESS & CURSOR ============ */
 #progressBar{position:fixed;top:0;left:0;height:3px;width:0;z-index:9990;background:linear-gradient(90deg,var(--blue),var(--crimson),var(--gold));box-shadow:0 0 14px rgba(255,59,107,.6);transition:width .08s linear}
-.cursor-dot,.cursor-ring{position:fixed;top:0;left:0;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);display:none}
-@media (pointer:fine){
-  .cursor-dot,.cursor-ring{display:block}
-  .cursor-dot{width:7px;height:7px;background:var(--blue-2);box-shadow:0 0 10px rgba(91,156,243,.9)}
-  .cursor-ring{width:38px;height:38px;border:1.5px solid rgba(91,156,243,.55);transition:width .25s,height .25s,border-color .25s,background .25s}
-  .cursor-ring.hot{width:58px;height:58px;border-color:rgba(255,59,107,.7);background:rgba(255,59,107,.08)}
-}
-
 /* ============ NAV ============ */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
@@ -434,29 +426,13 @@ nav.scrolled .nav-inner{height:62px}
 .result-count{font-size:.8rem;color:var(--muted-2);font-weight:600}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .card{
-  --mx:50%;--my:50%;--rx:0deg;--ry:0deg;
   position:relative;background:var(--card);
   border:1px solid var(--border);border-radius:var(--radius);
   padding:28px 26px 26px;display:flex;flex-direction:column;
-  transform:perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(0);
-  transition:transform .18s ease-out,border-color .35s,box-shadow .35s,opacity .35s;
+  transition:border-color .35s,box-shadow .35s,opacity .35s;
   overflow:hidden;
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
 }
-.card::before{
-  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
-  background:radial-gradient(420px circle at var(--mx) var(--my),rgba(91,156,243,.13),transparent 62%);
-  opacity:0;transition:opacity .35s;
-}
-.card::after{
-  content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
-  background:linear-gradient(135deg,rgba(91,156,243,.55),transparent 35%,transparent 65%,rgba(255,59,107,.45));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  opacity:0;transition:opacity .35s;
-}
-.card:hover{box-shadow:var(--shadow-lg),0 0 34px -10px rgba(91,156,243,.35)}
-.card:hover::before,.card:hover::after{opacity:1}
 .card > *{position:relative;z-index:1}
 .card.hidden{display:none}
 .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px}
@@ -465,7 +441,6 @@ nav.scrolled .nav-inner{height:62px}
   color:var(--blue-2);background:rgba(91,156,243,.1);padding:5px 12px;border-radius:999px;
   border:1px solid rgba(91,156,243,.2);
 }
-.card:hover .card-cat{background:rgba(91,156,243,.22)}
 .badge{font-size:.68rem;font-weight:800;padding:5px 12px;border-radius:999px;letter-spacing:.8px;text-transform:uppercase}
 .badge-popular{background:linear-gradient(135deg,#ff2e4d,#ff7a3d);color:#fff;animation:pulse 2.2s infinite}
 .badge-unavailable{background:rgba(255,255,255,.06);color:var(--muted-2);border:1px solid var(--border)}
@@ -473,20 +448,19 @@ nav.scrolled .nav-inner{height:62px}
 .badge-group{display:flex;align-items:center;gap:5px}.badge-best{background:linear-gradient(135deg,#f8c838,#ff9f43);color:#241500;border:1px solid rgba(248,200,56,.7);font-size:.58rem;padding:2px 7px;letter-spacing:.6px;line-height:1.2;white-space:nowrap}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,46,77,.55)}50%{box-shadow:0 0 0 7px rgba(255,46,77,0)}}
 .card h3{font-size:1.18rem;font-weight:800;color:#fff;margin-bottom:8px;transition:color .3s}
-.card:hover h3{background:linear-gradient(90deg,#fff,var(--blue-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .card p.desc{color:var(--muted);font-size:.9rem;margin-bottom:18px}
 .feats{list-style:none;margin-bottom:22px;flex-grow:1}
-.feats li{display:flex;align-items:center;gap:10px;padding:6px 0;color:var(--muted);font-size:.9rem;transition:transform .3s,color .3s}
+.feats li{display:flex;align-items:center;gap:10px;padding:6px 0;color:var(--muted);font-size:.9rem}
 .feats li svg{flex:none}
-.card:hover .feats li{transform:translateX(5px);color:#dfe6ef}
 .feats li:nth-child(1){transition-delay:.02s}.feats li:nth-child(2){transition-delay:.06s}
 .feats li:nth-child(3){transition-delay:.1s}.feats li:nth-child(4){transition-delay:.14s}.feats li:nth-child(5){transition-delay:.18s}
 .feats li.anti{color:#e9ddab;font-weight:600}
-.card:hover .feats li.anti{color:var(--gold)}
 .price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:16px;flex-wrap:wrap}
 .price{font-size:1.5rem;font-weight:900;letter-spacing:-.5px;background:linear-gradient(90deg,#14d455,#9ef0b6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.price-na{color:var(--muted-2);font-size:.95rem;font-weight:700}
+.price-na{color:var(--muted-2);font-size:1.25rem;font-weight:800}
+.usd{font-size:.82rem;color:var(--blue-2);font-weight:800;white-space:nowrap}.usd.na{color:var(--muted-2)}
 .per{font-size:.78rem;color:var(--muted-2);font-weight:600}
+.feats li.exclusive-label{padding:12px 0 3px;color:var(--gold);font-size:.68rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
 .card .video-sample{
   display:inline-flex;align-items:center;justify-content:center;gap:7px;margin-top:13px;
   font-size:.8rem;font-weight:600;color:var(--muted-2);text-decoration:none;cursor:pointer;
@@ -771,7 +745,6 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
   .footer-grid{grid-template-columns:1fr}
   .filter-bar{flex-direction:column;align-items:stretch}
   .search-wrap{max-width:none}
-  .cursor-dot,.cursor-ring{display:none!important}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
@@ -826,8 +799,6 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
 <canvas id="embers" aria-hidden="true"></canvas>
 
 <div id="progressBar"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
 
 <!-- ============ NAV ============ -->
 <nav id="mainNav">
@@ -948,7 +919,7 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
           <span class="hs-icon">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 2.7l8 4.4v9.8l-8 4.4-8-4.4V7.1l8-4.4z" stroke="#5b9cf3" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 7.4l8 4.3 8-4.3M12 11.7v9.4" stroke="#5b9cf3" stroke-width="1.7" stroke-linejoin="round"/></svg>
           </span>
-          <b><span class="counter" data-to="12">0</span><i>+</i></b>
+          <b><span class="counter" data-to="9">0</span><i>+</i></b>
           <span class="hs-label">Premium Modules</span>
         </div>
         <div class="hstat" data-tint="green">
@@ -987,43 +958,40 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
     <div class="s-head reveal">
       <span class="eyebrow">Arsenal</span>
       <h2>Featured <span class="hl">Tools</span></h2>
-      <p>Every module ships with anti-detection and admin support. Hover a card to feel it.</p>
+      <p>Choose a module and connect with us on Discord.</p>
     </div>
 
     <div class="filter-bar reveal" data-d="1">
       <div class="search-wrap">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#9aa0ae" stroke-width="2"/><path d="M20.5 20.5L16.7 16.7" stroke="#9aa0ae" stroke-width="2" stroke-linecap="round"/></svg>
-        <input type="text" id="productSearch" placeholder="Search tools — e.g. WarBear, Brute…" autocomplete="off">
+        <input type="text" id="productSearch" placeholder="Search tools — e.g. OFCA, Ninja…" autocomplete="off">
       </div>
       <div class="chips" id="filterChips">
         <button class="chip on" data-f="all">All</button>
-        <button class="chip" data-f="bundle">Bundles &amp; Farm</button>
-        <button class="chip" data-f="map">Map Modules</button>
+        <button class="chip" data-f="bundle">Bundles</button>
+        <button class="chip" data-f="farm">Farm Modules</button>
         <button class="chip" data-f="utility">Utilities</button>
         <button class="chip" data-f="available">Available Only</button>
       </div>
-      <span class="result-count" id="resultCount">13 tools</span>
+      <span class="result-count" id="resultCount">9 tools</span>
     </div>
 
     <div class="grid" id="productGrid">
 
       <!-- 1 -->
-      <article class="card reveal" data-cat="bundle" data-avail="1" data-search="all access tool auto gg v1.2 summon x v1.1 brute farm glacial farm gzbear farm fzbear farm longbill farm anti-detection admin support">
-        <div class="card-top"><span class="card-cat">All Access Tool</span><span class="badge-group"><span class="badge badge-popular">Popular</span><span class="badge badge-best">Best Buy</span></span></div>
-        <h3>All Access Tool</h3>
-        <p class="desc">Complete access to every listed module and included bonus features.</p>
+      <article class="card reveal" data-cat="bundle" data-avail="1" data-search="all in one all access auto gg summon x all auto farm auto sos auto synthesis bundle">
+        <div class="card-top"><span class="card-cat">Bundle</span><span class="badge-group"><span class="badge badge-popular">Popular</span><span class="badge badge-best">Best Buy</span></span></div>
+        <h3>ALL IN ONE &amp; ALL ACCESS</h3>
+        <p class="desc">One bundle with the core automation tools and exclusive SOS and Synthesis modules.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Auto GG v1.2</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Summon X v1.1</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Brute Farm</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Glacial Farm</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>GZBear Farm</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>FZBear Farm</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>LongBill Farm</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>AUTO GG</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>SUMMON X</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>ALL AUTO FARM</li>
+        <li class="exclusive-label">Only on this bundle</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>AUTO SOS</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>AUTO SYNTHESIS</li>
         </ul>
-        <div class="price-row"><span class="price">₱1,500</span><span class="per">/ Lifetime access</span></div>
+        <div class="price-row"><span class="price">₱1,500</span><span class="usd">≈ $24</span><span class="per">/ Lifetime access</span></div>
         <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
         <button class="video-sample">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
@@ -1032,19 +1000,16 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       </article>
 
       <!-- 2 -->
-      <article class="card reveal" data-cat="bundle" data-avail="1" data-search="auto summon auto hit fast summon summon count auto reload anti-detection admin support precision aim">
-        <div class="card-top"><span class="card-cat">Auto Tool</span><span class="badge-group"><span class="badge badge-best">Best Buy</span><span class="badge badge-new">New</span></span></div>
-        <h3>Auto Summon / Auto Hit</h3>
-        <p class="desc">Fast summon and auto-hit utility with precision-focused controls.</p>
+      <article class="card reveal" data-cat="bundle" data-avail="1" data-search="auto farm bundle all ofca farm all godzone farm all forbidden zone farm">
+        <div class="card-top"><span class="card-cat">Bundle</span></div>
+        <h3>AUTO FARM BUNDLE</h3>
+        <p class="desc">A complete farm bundle for OFCA, GodZone, and Forbidden Zone maps.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Fast Summon</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Summon Count</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Auto Reload</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Precision Aim</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>ALL OFCA FARM</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>ALL GODZONE FARM</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>ALL FORBIDDEN ZONE FARM</li>
         </ul>
-        <div class="price-row"><span class="price">₱400</span><span class="per">/ Lifetime access</span></div>
+        <div class="price-row"><span class="price">₱1,000</span><span class="usd">≈ $16</span><span class="per">/ Lifetime access</span></div>
         <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
         <button class="video-sample">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
@@ -1053,18 +1018,16 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       </article>
 
       <!-- 3 -->
-      <article class="card reveal" data-d="1" data-cat="bundle" data-avail="1" data-search="auto farm all-in-one all maps farming automation updates">
-        <div class="card-top"><span class="card-cat">Auto Farm</span></div>
-        <h3>Auto Farm All-in-One</h3>
-        <p class="desc">All Maps — comprehensive farming automation for every game mode.</p>
+      <article class="card reveal" data-cat="utility" data-avail="1" data-search="auto summon ninja fast summon summon count auto hit reload">
+        <div class="card-top"><span class="card-cat">Utility</span></div>
+        <h3>AUTO SUMMON / NINJA</h3>
+        <p class="desc">Fast summon controls with summon counting and automatic hit-and-reload support.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>All Maps Supported</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Auto Farming Enabled</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Regular Updates</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>FAST SUMMON</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>SUMMON COUNT</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>AUTO HIT &amp; RELOAD</li>
         </ul>
-        <div class="price-row"><span class="price">₱1,000</span><span class="per">/ Lifetime access</span></div>
+        <div class="price-row"><span class="price">₱400</span><span class="usd">≈ $6</span><span class="per">/ Lifetime access</span></div>
         <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
         <button class="video-sample">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
@@ -1073,18 +1036,14 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       </article>
 
       <!-- 4 -->
-      <article class="card reveal" data-d="2" data-cat="bundle" data-avail="1" data-search="auto gg v1.2 farm damage summon tracking">
-        <div class="card-top"><span class="card-cat">Auto GG</span></div>
-        <h3>Auto GG v1.2</h3>
-        <p class="desc">Farm Damage / Summon — focused module with damage tracking.</p>
+      <article class="card reveal" data-cat="farm" data-avail="1" data-search="ofca farm individual map module">
+        <div class="card-top"><span class="card-cat">Farm Module</span></div>
+        <h3>OFCA FARM</h3>
+        <p class="desc">Individual OFCA farming module.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Farm Damage Mode</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Summoning Support</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Lifetime Updates</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>OFCA FARM</li>
         </ul>
-        <div class="price-row"><span class="price">₱800</span><span class="per">/ Lifetime access</span></div>
+        <div class="price-row"><span class="price">₱400</span><span class="usd">≈ $6</span><span class="per">/ each · Lifetime access</span></div>
         <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
         <button class="video-sample">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
@@ -1093,17 +1052,14 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       </article>
 
       <!-- 5 -->
-      <article class="card reveal" data-cat="map" data-avail="1" data-search="legacy map brute class movement">
-        <div class="card-top"><span class="card-cat">Map Module</span></div>
-        <h3>Legacy Map : Brute</h3>
-        <p class="desc">Classic Legacy map module tuned for the Brute class.</p>
+      <article class="card reveal" data-cat="farm" data-avail="1" data-search="forbidden zone farm fzone individual map module">
+        <div class="card-top"><span class="card-cat">Farm Module</span></div>
+        <h3>FORBIDDEN ZONE FARM</h3>
+        <p class="desc">Individual Forbidden Zone farming module.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Brute Class Support</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Enhanced Movement</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>FORBIDDEN ZONE FARM</li>
         </ul>
-        <div class="price-row"><span class="price">₱400</span><span class="per">/ Lifetime access</span></div>
+        <div class="price-row"><span class="price">₱400</span><span class="usd">≈ $6</span><span class="per">/ each · Lifetime access</span></div>
         <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
         <button class="video-sample">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
@@ -1112,17 +1068,14 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       </article>
 
       <!-- 6 -->
-      <article class="card reveal" data-d="1" data-cat="map" data-avail="1" data-search="legacy map longbill movement">
-        <div class="card-top"><span class="card-cat">Map Module</span></div>
-        <h3>Legacy Map : Longbill</h3>
-        <p class="desc">Classic Legacy map module with Longbill support.</p>
+      <article class="card reveal" data-cat="farm" data-avail="1" data-search="god zone farm godzone individual map module">
+        <div class="card-top"><span class="card-cat">Farm Module</span></div>
+        <h3>GOD ZONE FARM</h3>
+        <p class="desc">Individual GodZone farming module.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Longbill Support</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Enhanced Movement</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>GOD ZONE FARM</li>
         </ul>
-        <div class="price-row"><span class="price">₱400</span><span class="per">/ Lifetime access</span></div>
+        <div class="price-row"><span class="price">₱400</span><span class="usd">≈ $6</span><span class="per">/ each · Lifetime access</span></div>
         <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
         <button class="video-sample">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
@@ -1131,128 +1084,49 @@ footer{border-top:1px solid var(--border);background:linear-gradient(180deg,tran
       </article>
 
       <!-- 7 -->
-      <article class="card reveal" data-d="2" data-cat="map" data-avail="1" data-search="godzone map glacial zone controls">
-        <div class="card-top"><span class="card-cat">Map Module</span></div>
-        <h3>GodZone Map : Glacial</h3>
-        <p class="desc">GodZone map module with enhanced zone control for Glacial.</p>
+      <article class="card reveal" data-cat="utility" data-avail="0" data-search="boss buff tool 1000 php unavailable">
+        <div class="card-top"><span class="card-cat">Utility</span><span class="badge badge-unavailable">Unavailable</span></div>
+        <h3>BOSS BUFF TOOL</h3>
+        <p class="desc">This tool is currently unavailable.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Glacial Zone Support</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Enhanced Controls</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>BOSS BUFF TOOL</li>
         </ul>
-        <div class="price-row"><span class="price">₱400</span><span class="per">/ Lifetime access</span></div>
-        <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
-        <button class="video-sample">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
-          Video Sample
-        </button>
+        <div class="price-row"><span class="price-na">₱1,000</span><span class="usd na">≈ $16</span><span class="per">/ Not Available</span></div>
+        <span class="btn btn-lock">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#6d7382" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#6d7382" stroke-width="1.8"/></svg>
+          Unavailable
+        </span>
       </article>
 
       <!-- 8 -->
-      <article class="card reveal" data-cat="map" data-avail="1" data-search="godzone map bear2 zone controls">
-        <div class="card-top"><span class="card-cat">Map Module</span></div>
-        <h3>GodZone Map : Bear2</h3>
-        <p class="desc">GodZone map module with enhanced zone control for Bear2.</p>
+      <article class="card reveal" data-cat="utility" data-avail="0" data-search="bug card tool 1000 php unavailable">
+        <div class="card-top"><span class="card-cat">Utility</span><span class="badge badge-unavailable">Unavailable</span></div>
+        <h3>BUG CARD TOOL</h3>
+        <p class="desc">This tool is currently unavailable.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Bear2 Zone Support</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Enhanced Controls</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>BUG CARD TOOL</li>
         </ul>
-        <div class="price-row"><span class="price">₱400</span><span class="per">/ Lifetime access</span></div>
-        <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
-        <button class="video-sample">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
-          Video Sample
-        </button>
+        <div class="price-row"><span class="price-na">₱1,000</span><span class="usd na">≈ $16</span><span class="per">/ Not Available</span></div>
+        <span class="btn btn-lock">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#6d7382" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#6d7382" stroke-width="1.8"/></svg>
+          Unavailable
+        </span>
       </article>
 
       <!-- 9 -->
-      <article class="card reveal" data-d="1" data-cat="map" data-avail="1" data-search="fzone map warbear zone runs">
-        <div class="card-top"><span class="card-cat">Map Module</span></div>
-        <h3>FZone Map : WarBear</h3>
-        <p class="desc">FZone map module built for WarBear runs.</p>
-        <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>WarBear Zone Support</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
-        </ul>
-        <div class="price-row"><span class="price">₱400</span><span class="per">/ Lifetime access</span></div>
-        <a class="btn btn-green" href="https://discord.gg/DphVavCaH3" target="_blank" rel="noopener">Buy on Discord</a>
-        <button class="video-sample">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#f8c838" stroke-width="1.8"/><path d="M10 8.5l6 3.5-6 3.5v-7z" fill="#f8c838"/></svg>
-          Video Sample
-        </button>
-      </article>
-
-      <!-- 10 -->
-      <article class="card reveal" data-d="2" data-cat="map" data-avail="0" data-search="legacy map sos synthesis dual mode real-time sync strategic">
-        <div class="card-top"><span class="card-cat">Map Module</span><span class="badge badge-unavailable">Unavailable</span></div>
-        <h3>Legacy Map : SOS / Synthesis</h3>
-        <p class="desc">Dual-mode Legacy map module for strategic gameplay.</p>
-        <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Dual Mode (SOS + Synthesis)</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Real-time Sync</li>
-          <li class="anti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3.5v5.1c0 5-3.4 9.6-8 11.4-4.6-1.8-8-6.4-8-11.4V5.5L12 2z" stroke="#f8c838" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12.2l2.2 2.2 4.2-4.6" stroke="#f8c838" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Anti-Detection</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
-        </ul>
-        <div class="price-row"><span class="price-na">Currently Unavailable</span></div>
-        <span class="btn btn-lock">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#6d7382" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#6d7382" stroke-width="1.8"/></svg>
-          Unavailable
-        </span>
-      </article>
-
-      <!-- 11 -->
-      <article class="card reveal" data-cat="utility" data-avail="0" data-search="boss buff tool return card">
+      <article class="card reveal" data-cat="utility" data-avail="0" data-search="arena reset tool 1000 php unavailable">
         <div class="card-top"><span class="card-cat">Utility</span><span class="badge badge-unavailable">Unavailable</span></div>
-        <h3>Boss Buff Tool</h3>
-        <p class="desc">Boss buff automation — works with your BossBuff Return Card.</p>
+        <h3>ARENA RESET TOOL</h3>
+        <p class="desc">This tool is currently unavailable.</p>
         <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>For BossBuff Return Card</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>ARENA RESET TOOL</li>
         </ul>
-        <div class="price-row"><span class="price-na">Currently Unavailable</span></div>
+        <div class="price-row"><span class="price-na">₱1,000</span><span class="usd na">≈ $16</span><span class="per">/ Not Available</span></div>
         <span class="btn btn-lock">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#6d7382" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#6d7382" stroke-width="1.8"/></svg>
           Unavailable
         </span>
       </article>
-
-      <!-- 12 -->
-      <article class="card reveal" data-d="1" data-cat="utility" data-avail="0" data-search="bug card tool return unlimited coming soon">
-        <div class="card-top"><span class="card-cat">Utility</span><span class="badge badge-unavailable">Unavailable</span></div>
-        <h3>Bug Card Tool</h3>
-        <p class="desc">Return Card with unlimited usage — coming back soon.</p>
-        <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Return Card Unlimited</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
-        </ul>
-        <div class="price-row"><span class="price-na">Currently Unavailable</span></div>
-        <span class="btn btn-lock">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#6d7382" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#6d7382" stroke-width="1.8"/></svg>
-          Unavailable
-        </span>
-      </article>
-
-      <!-- 13 -->
-      <article class="card reveal" data-d="2" data-cat="utility" data-avail="0" data-search="arena reset tool weekly instant level coming soon">
-        <div class="card-top"><span class="card-cat">Utility</span><span class="badge badge-unavailable">Unavailable</span></div>
-        <h3>Arena Reset Tool</h3>
-        <p class="desc">Weekly Arena reset with instant level gain — coming back soon.</p>
-        <ul class="feats">
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Arena Reset (Weekly)</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#12d453" opacity=".16"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#12d453" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Instant Level</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 13a8 8 0 0116 0v4a2 2 0 01-2 2h-1a2 2 0 01-2-2v-2a2 2 0 012-2h2.9M7.1 13H10a2 2 0 012 2v2a2 2 0 01-2 2H9a2 2 0 01-2-2v-4z" stroke="#5b9cf3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Admin Support</li>
-        </ul>
-        <div class="price-row"><span class="price-na">Currently Unavailable</span></div>
-        <span class="btn btn-lock">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="2" stroke="#6d7382" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="#6d7382" stroke-width="1.8"/></svg>
-          Unavailable
-        </span>
-      </article>
-
     </div>
     <div class="no-results" id="noResults">
       <b>No tools match your search</b>
@@ -1623,7 +1497,7 @@ const finePointer = window.matchMedia('(pointer: fine)').matches;
 const pre = $('#preloader'), preBar = $('#preBar'), prePct = $('#prePct'), preLog = $('#preLog');
 const bootLines = [
   'Initializing CrossFire Engine',
-  'Loading 13 tactical modules',
+  'Loading 9 tactical modules',
   'Securing anti-detection layer',
   'Connecting support channel'
 ];
@@ -1681,23 +1555,6 @@ const onScrollProg = () => {
 window.addEventListener('scroll', onScrollProg, {passive:true});
 onScrollProg();
 
-/* ---------- Custom cursor ---------- */
-if (finePointer && !reduceMotion){
-  const dot = $('#cursorDot'), ring = $('#cursorRing');
-  let mx = -100, my = -100, rx = -100, ry = -100;
-  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, {passive:true});
-  (function loop(){
-    rx += (mx - rx) * .16; ry += (my - ry) * .16;
-    dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
-    ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
-    requestAnimationFrame(loop);
-  })();
-  $$('a, button, .chip, .card, input, .crosshair-code').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('hot'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('hot'));
-  });
-}
-
 /* ---------- Ember particles ---------- */
 const canvas = $('#embers'), ctx = canvas.getContext('2d');
 let W, H, parts = [];
@@ -1740,22 +1597,6 @@ function tick(){
   requestAnimationFrame(tick);
 }
 if (COUNT) tick();
-
-/* ---------- Background mouse parallax ---------- */
-if (finePointer && !reduceMotion){
-  const art = $('#bgArt');
-  let tx = 0, ty = 0, cx = 0, cy = 0;
-  window.addEventListener('mousemove', e => {
-    tx = (e.clientX / innerWidth - .5) * 18;
-    ty = (e.clientY / innerHeight - .5) * 12;
-  }, {passive:true});
-  (function para(){
-    cx += (tx - cx) * .045; cy += (ty - cy) * .045;
-    art.style.setProperty('--px', cx.toFixed(2) + 'px');
-    art.style.setProperty('--py', cy.toFixed(2) + 'px');
-    requestAnimationFrame(para);
-  })();
-}
 
 /* ---------- Navbar state + spy ---------- */
 const nav = $('#mainNav');
@@ -1852,29 +1693,6 @@ const rIO = new IntersectionObserver(ents => {
 }, {threshold:.1});
 $$('.reveal').forEach(el => rIO.observe(el));
 
-/* ---------- Card tilt + spotlight ---------- */
-if (finePointer && !reduceMotion){
-  $$('.card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-      card.style.setProperty('--mx', (px*100)+'%');
-      card.style.setProperty('--my', (py*100)+'%');
-      card.style.setProperty('--ry', ((px-.5)*7).toFixed(2)+'deg');
-      card.style.setProperty('--rx', ((.5-py)*7).toFixed(2)+'deg');
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.setProperty('--rx','0deg'); card.style.setProperty('--ry','0deg');
-    });
-  });
-} else {
-  $$('.card').forEach(card => card.addEventListener('mousemove', e => {
-    const r = card.getBoundingClientRect();
-    card.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
-    card.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
-  }));
-}
-
 /* ---------- Product filter & search ---------- */
 const cards = $$('#productGrid .card');
 const chipsC = $$('#filterChips .chip');
@@ -1945,5 +1763,5 @@ if (chBox) chBox.addEventListener('click', () => {
 $('#toTop').addEventListener('click', () => window.scrollTo({top:0, behavior: reduceMotion ? 'auto' : 'smooth'}));
 })();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a3da7c889bbd8e41',t:'MTc4OTg0MDc4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
